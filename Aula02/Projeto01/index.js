@@ -141,4 +141,4 @@ app.delete('/filmes/:id', (req, res) =>{
 
 app.listen(port, function() {
     console.info(`App esta rodando em: http://localhost:${port}/`);
-})
+};
