@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 
+app.use(express.json());
+
+
 const Conn = require('./models/conn/conn');
 
 Conn('localhost', 27017, 'musicas');
