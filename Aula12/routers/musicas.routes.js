@@ -3,7 +3,6 @@ const router = express.Router();
 const Musica = require('../models/musicas')
 
 
-
 router.post('/add', async (req, res) =>{
     await Musica.create(req.body)
     .then(() => {
@@ -20,6 +19,7 @@ router.get('/', async (req, res) =>{
         res.send(musica);
     })
     .catch((err) =>{
+        res.status(400).send("Algo errado com a musica, tente novamente");
         console.error(err);
     })
 });
@@ -30,6 +30,7 @@ router.get('/findById/:id', async (req, res) =>{
         res.send(musica);
     })
     .catch((err) =>{
+        res.status(400).send("Algo errado com a musica, tente novamente");
         console.error(err);
     })
 });
@@ -39,19 +40,32 @@ router.get('/findByName/:nome', async (req, res) =>{
         res.send(musica);
     })
     .catch((err) =>{
+        res.status(400).send("Algo errado com a musica, tente novamente");
         console.error(err);
     })
 });
 
-
-
-router.put('/update', (req, res) =>{
-
+router.put("/update/:id", async (req, res) => {
+    await Musica.updateOne({_id : req.params.id},req.body)
+    .then(() => {
+        res.status(200).send("Atualizado com sucesso");
+    })
+    .catch((err) => {
+        res.status(400).send("Algo errado com a musica, tente novamente");
+        console.log(err);
+    });
 });
 
 
-router.delete('/delete', (req, res) =>{
-
+router.delete("/delete/:id", async (req, res) => {
+    await Musica.deleteOne({_id: req.params.id})
+    .then(() => {
+        res.status(200).send("Música excluída com sucesso!")
+    }) 
+    .catch((err) => {
+        res.status(400).send("Algo de errado não esta certo!")
+        console.error(err);
+    })
 });
 
 module.exports = router;
